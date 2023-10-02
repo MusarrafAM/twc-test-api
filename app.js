@@ -111,11 +111,21 @@ async function main() {
     res.send(true);
   });
 
-  //Get All Contact Data Route
-  // app.get("/all_contacts", async function (req, res) {
-  //   const all_contacts = await Contact.find({});
-  //   res.send(all_contacts);
-  // });
+  // Get All Contact Data Route
+  app.get("/all_contacts", async function (req, res) {
+    const all_contacts = await Contact.find({});
+    res.send(all_contacts);
+  });
+
+  // Delete A Contact Detail
+  app.delete("/delete", async (req, res) => {
+    const recievedId = req.body.id; //! Getting from api parameter.
+    if (recievedId) {
+      await Contact.findByIdAndDelete(recievedId);
+      res.send(true);
+    }
+    res.send(false);
+  });
 
   app.get("/greet/:name", (req, res) => {
     res.send(`Welcome ${req.params.name}`);
